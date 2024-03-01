@@ -227,7 +227,7 @@ where
         let (prover_params, F_circuit) = prep_param;
 
         let (r1cs, cf_r1cs) =
-            get_r1cs::<C1, GC1, C2, GC2, FC>(&prover_params.poseidon_config, *F_circuit)?;
+            get_r1cs::<C1, GC1, C2, GC2, FC>(&prover_params.poseidon_config, F_circuit.clone())?;
 
         let verifier_params = VerifierParams::<C1, C2> {
             poseidon_config: prover_params.poseidon_config.clone(),
@@ -244,7 +244,7 @@ where
         let cs2 = ConstraintSystem::<C1::BaseField>::new_ref();
 
         let augmented_F_circuit =
-            AugmentedFCircuit::<C1, C2, GC2, FC>::empty(&pp.poseidon_config, F);
+            AugmentedFCircuit::<C1, C2, GC2, FC>::empty(&pp.poseidon_config, F.clone());
         let cf_circuit = CycleFoldCircuit::<C1, GC1>::empty();
 
         augmented_F_circuit.generate_constraints(cs.clone())?;
@@ -333,7 +333,7 @@ where
                 U_i: Some(self.U_i.clone()), // = dummy
                 U_i1: Some(U_i1.clone()),
                 cmT: Some(cmT),
-                F: self.F,
+                F: self.F.clone(),
                 x: Some(u_i1_x),
                 cf1_u_i: None,
                 cf2_u_i: None,
@@ -405,7 +405,7 @@ where
                 U_i: Some(self.U_i.clone()),
                 U_i1: Some(U_i1.clone()),
                 cmT: Some(cmT),
-                F: self.F,
+                F: self.F.clone(),
                 x: Some(u_i1_x),
                 // cyclefold values
                 cf1_u_i: Some(cfW_u_i.clone()),

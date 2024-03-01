@@ -79,7 +79,7 @@ pub mod tests {
 
     // test to check that the MultiInputsFCircuit computes the same values inside and outside the circuit
     #[test]
-    fn test_add_f_circuit() {
+    fn test_f_circuit() {
         let cs = ConstraintSystem::<Fr>::new_ref();
 
         let circuit = MultiInputsFCircuit::<Fr>::new(());

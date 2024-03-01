@@ -10,7 +10,7 @@ use ark_std::fmt::Debug;
 /// inside the agmented F' function).
 /// The parameter z_i denotes the current state, and z_{i+1} denotes the next state after applying
 /// the step.
-pub trait FCircuit<F: PrimeField>: Clone + Copy + Debug {
+pub trait FCircuit<F: PrimeField>: Clone + Debug {
     type Params: Debug;
 
     /// returns a new FCircuit instance
@@ -18,14 +18,14 @@ pub trait FCircuit<F: PrimeField>: Clone + Copy + Debug {
 
     /// returns the number of elements in the state of the FCircuit, which corresponds to the
     /// FCircuit inputs.
-    fn state_len(self) -> usize;
+    fn state_len(&self) -> usize;
 
     /// computes the next state values in place, assigning z_{i+1} into z_i, and computing the new
     /// z_{i+1}
     fn step_native(
         // this method uses self, so that each FCircuit implementation (and different frontends)
         // can hold a state if needed to store data to compute the next state.
-        self,
+        &self,
         z_i: Vec<F>,
     ) -> Result<Vec<F>, Error>;
 
@@ -33,7 +33,7 @@ pub trait FCircuit<F: PrimeField>: Clone + Copy + Debug {
     fn generate_step_constraints(
         // this method uses self, so that each FCircuit implementation (and different frontends)
         // can hold a state if needed to store data to generate the constraints.
-        self,
+        &self,
         cs: ConstraintSystemRef<F>,
         z_i: Vec<FpVar<F>>,
     ) -> Result<Vec<FpVar<F>>, SynthesisError>;

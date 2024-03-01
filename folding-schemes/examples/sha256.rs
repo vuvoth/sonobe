@@ -76,7 +76,7 @@ pub mod tests {
 
     // test to check that the Sha256FCircuit computes the same values inside and outside the circuit
     #[test]
-    fn test_sha256_f_circuit() {
+    fn test_f_circuit() {
         let cs = ConstraintSystem::<Fr>::new_ref();
 
         let circuit = Sha256FCircuit::<Fr>::new(());
